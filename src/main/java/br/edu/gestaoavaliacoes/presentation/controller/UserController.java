@@ -7,6 +7,7 @@ import br.edu.gestaoavaliacoes.presentation.dto.request.UserCreateRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.request.UserDisciplineRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.request.UserUpdateRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.UserResponse;
+import br.edu.gestaoavaliacoes.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,63 +17,69 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
     public Page<UserResponse> findAll(@PageableDefault(size = 20) Pageable pageable) {
-        throw new UnsupportedOperationException();
+        return userService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     public UserResponse findById(@PathVariable Long id) {
-        throw new UnsupportedOperationException();
+        return userService.findById(id);
     }
 
     @GetMapping("/me")
     public UserResponse findMe() {
-        throw new UnsupportedOperationException();
+        return userService.findMe();
     }
 
     @PostMapping
     public UserResponse create(@RequestBody UserCreateRequest request) {
-        throw new UnsupportedOperationException();
+        return userService.create(request);
     }
 
     @PutMapping("/me")
     public UserResponse updateMe(@RequestBody UserUpdateRequest request) {
-        throw new UnsupportedOperationException();
+        return userService.updateMe(request);
     }
 
     @PostMapping("/me/change-password")
     public void changePassword(@RequestBody ChangePasswordRequest request) {
-        throw new UnsupportedOperationException();
+        userService.changePassword(request);
     }
 
     @PostMapping("/{id}/reset-password")
     public void resetPassword(@PathVariable Long id, @RequestBody ResetPasswordRequest request) {
-        throw new UnsupportedOperationException();
+        userService.resetPassword(id, request);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        throw new UnsupportedOperationException();
+        userService.delete(id);
     }
 
     @PostMapping("/{id}/courses")
     public UserResponse addCourse(@PathVariable Long id, @RequestBody UserCourseRequest request) {
-        throw new UnsupportedOperationException();
+        return userService.addCourse(id, request);
     }
 
     @DeleteMapping("/{id}/courses/{courseId}")
     public UserResponse removeCourse(@PathVariable Long id, @PathVariable Long courseId) {
-        throw new UnsupportedOperationException();
+        return userService.removeCourse(id, courseId);
     }
 
     @PostMapping("/{id}/disciplines")
     public UserResponse addDiscipline(@PathVariable Long id, @RequestBody UserDisciplineRequest request) {
-        throw new UnsupportedOperationException();
+        return userService.addDiscipline(id, request);
     }
 
     @DeleteMapping("/{id}/disciplines/{disciplineId}")
     public UserResponse removeDiscipline(@PathVariable Long id, @PathVariable Long disciplineId) {
-        throw new UnsupportedOperationException();
+        return userService.removeDiscipline(id, disciplineId);
     }
 }
