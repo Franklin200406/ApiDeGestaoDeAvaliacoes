@@ -4,6 +4,7 @@ import br.edu.gestaoavaliacoes.presentation.dto.request.AssessmentAssociationReq
 import br.edu.gestaoavaliacoes.presentation.dto.request.AssessmentRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.AssessmentResponse;
 import br.edu.gestaoavaliacoes.service.AssessmentService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -41,12 +42,12 @@ public class AssessmentController {
     }
 
     @PostMapping
-    public AssessmentResponse create(@RequestBody AssessmentRequest request) {
+    public AssessmentResponse create(@Valid @RequestBody AssessmentRequest request) {
         return assessmentService.create(request);
     }
 
     @PutMapping("/{id}")
-    public AssessmentResponse update(@PathVariable Long id, @RequestBody AssessmentRequest request) {
+    public AssessmentResponse update(@PathVariable Long id, @Valid @RequestBody AssessmentRequest request) {
         return assessmentService.update(id, request);
     }
 
@@ -57,7 +58,7 @@ public class AssessmentController {
 
     @PostMapping("/{id}/multiple-choice-questions")
     public AssessmentResponse addMultipleChoiceQuestion(@PathVariable Long id,
-                                                        @RequestBody AssessmentAssociationRequest request) {
+                                                        @Valid @RequestBody AssessmentAssociationRequest request) {
         return assessmentService.addMultipleChoiceQuestion(id, request);
     }
 
@@ -69,7 +70,7 @@ public class AssessmentController {
 
     @PostMapping("/{id}/open-questions")
     public AssessmentResponse addOpenQuestion(@PathVariable Long id,
-                                              @RequestBody AssessmentAssociationRequest request) {
+                                              @Valid @RequestBody AssessmentAssociationRequest request) {
         return assessmentService.addOpenQuestion(id, request);
     }
 

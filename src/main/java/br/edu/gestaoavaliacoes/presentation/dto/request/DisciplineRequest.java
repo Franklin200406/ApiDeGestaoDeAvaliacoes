@@ -1,17 +1,25 @@
 package br.edu.gestaoavaliacoes.presentation.dto.request;
 
 import br.edu.gestaoavaliacoes.model.enums.Shift;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class DisciplineRequest {
 
+    @NotBlank(message = "Nome é obrigatório")
     private String name;
 
     private String description;
 
+    @NotNull(message = "Carga horária é obrigatória")
+    @Positive(message = "Carga horária deve ser maior que zero")
     private Integer workloadHours;
 
+    @NotNull(message = "Turno é obrigatório")
     private Shift shift;
 
+    @NotNull(message = "Curso é obrigatório")
     private Long courseId;
 
     public DisciplineRequest() {

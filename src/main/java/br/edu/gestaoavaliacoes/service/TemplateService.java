@@ -32,7 +32,7 @@ public class TemplateService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public TemplateResponse create(TemplateRequest request) {
-        Template template = new Template(request.getName(), request.getFileName());
+        Template template = new Template(request.getName(), request.getFileName(), request.getContent());
         return toResponse(templateRepository.save(template));
     }
 
@@ -41,6 +41,7 @@ public class TemplateService {
         Template template = getOrThrow(id);
         template.setName(request.getName());
         template.setFileName(request.getFileName());
+        template.setContent(request.getContent());
         return toResponse(templateRepository.save(template));
     }
 

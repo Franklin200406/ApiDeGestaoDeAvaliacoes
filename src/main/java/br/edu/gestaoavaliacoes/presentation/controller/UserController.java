@@ -8,6 +8,7 @@ import br.edu.gestaoavaliacoes.presentation.dto.request.UserDisciplineRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.request.UserUpdateRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.UserResponse;
 import br.edu.gestaoavaliacoes.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -39,22 +40,22 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse create(@RequestBody UserCreateRequest request) {
+    public UserResponse create(@Valid @RequestBody UserCreateRequest request) {
         return userService.create(request);
     }
 
     @PutMapping("/me")
-    public UserResponse updateMe(@RequestBody UserUpdateRequest request) {
+    public UserResponse updateMe(@Valid @RequestBody UserUpdateRequest request) {
         return userService.updateMe(request);
     }
 
     @PostMapping("/me/change-password")
-    public void changePassword(@RequestBody ChangePasswordRequest request) {
+    public void changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         userService.changePassword(request);
     }
 
     @PostMapping("/{id}/reset-password")
-    public void resetPassword(@PathVariable Long id, @RequestBody ResetPasswordRequest request) {
+    public void resetPassword(@PathVariable Long id, @Valid @RequestBody ResetPasswordRequest request) {
         userService.resetPassword(id, request);
     }
 
@@ -64,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/courses")
-    public UserResponse addCourse(@PathVariable Long id, @RequestBody UserCourseRequest request) {
+    public UserResponse addCourse(@PathVariable Long id, @Valid @RequestBody UserCourseRequest request) {
         return userService.addCourse(id, request);
     }
 
@@ -74,7 +75,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/disciplines")
-    public UserResponse addDiscipline(@PathVariable Long id, @RequestBody UserDisciplineRequest request) {
+    public UserResponse addDiscipline(@PathVariable Long id, @Valid @RequestBody UserDisciplineRequest request) {
         return userService.addDiscipline(id, request);
     }
 

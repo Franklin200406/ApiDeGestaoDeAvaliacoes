@@ -4,6 +4,7 @@ import br.edu.gestaoavaliacoes.presentation.dto.request.CourseRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.CourseResponse;
 import br.edu.gestaoavaliacoes.presentation.dto.response.DisciplineResponse;
 import br.edu.gestaoavaliacoes.service.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -36,12 +37,12 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseResponse create(@RequestBody CourseRequest request) {
+    public CourseResponse create(@Valid @RequestBody CourseRequest request) {
         return courseService.create(request);
     }
 
     @PutMapping("/{id}")
-    public CourseResponse update(@PathVariable Long id, @RequestBody CourseRequest request) {
+    public CourseResponse update(@PathVariable Long id, @Valid @RequestBody CourseRequest request) {
         return courseService.update(id, request);
     }
 

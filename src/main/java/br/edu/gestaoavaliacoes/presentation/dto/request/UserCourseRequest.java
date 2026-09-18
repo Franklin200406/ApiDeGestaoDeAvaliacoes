@@ -1,7 +1,10 @@
 package br.edu.gestaoavaliacoes.presentation.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UserCourseRequest {
 
+    @NotNull(message = "Curso é obrigatório")
     private Long courseId;
 
     public UserCourseRequest() {

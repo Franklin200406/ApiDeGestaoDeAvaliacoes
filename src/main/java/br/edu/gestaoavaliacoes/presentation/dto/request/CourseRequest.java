@@ -1,13 +1,17 @@
 package br.edu.gestaoavaliacoes.presentation.dto.request;
 
 import br.edu.gestaoavaliacoes.model.enums.ClassFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class CourseRequest {
 
+    @NotBlank(message = "Nome é obrigatório")
     private String name;
 
     private String description;
 
+    @NotNull(message = "Formato de aula é obrigatório")
     private ClassFormat classFormat;
 
     public CourseRequest() {

@@ -3,6 +3,7 @@ package br.edu.gestaoavaliacoes.presentation.controller;
 import br.edu.gestaoavaliacoes.presentation.dto.request.DisciplineRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.DisciplineResponse;
 import br.edu.gestaoavaliacoes.service.DisciplineService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,12 +30,12 @@ public class DisciplineController {
     }
 
     @PostMapping
-    public DisciplineResponse create(@RequestBody DisciplineRequest request) {
+    public DisciplineResponse create(@Valid @RequestBody DisciplineRequest request) {
         return disciplineService.create(request);
     }
 
     @PutMapping("/{id}")
-    public DisciplineResponse update(@PathVariable Long id, @RequestBody DisciplineRequest request) {
+    public DisciplineResponse update(@PathVariable Long id, @Valid @RequestBody DisciplineRequest request) {
         return disciplineService.update(id, request);
     }
 

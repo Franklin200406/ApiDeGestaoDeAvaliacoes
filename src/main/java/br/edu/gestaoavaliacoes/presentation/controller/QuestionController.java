@@ -3,6 +3,7 @@ package br.edu.gestaoavaliacoes.presentation.controller;
 import br.edu.gestaoavaliacoes.presentation.dto.request.QuestionRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.QuestionResponse;
 import br.edu.gestaoavaliacoes.service.QuestionService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,12 +31,12 @@ public class QuestionController {
     }
 
     @PostMapping
-    public QuestionResponse create(@RequestBody QuestionRequest request) {
+    public QuestionResponse create(@Valid @RequestBody QuestionRequest request) {
         return questionService.create(request);
     }
 
     @PutMapping("/{id}")
-    public QuestionResponse update(@PathVariable Long id, @RequestBody QuestionRequest request) {
+    public QuestionResponse update(@PathVariable Long id, @Valid @RequestBody QuestionRequest request) {
         return questionService.update(id, request);
     }
 

@@ -1,30 +1,47 @@
 package br.edu.gestaoavaliacoes.presentation.dto.request;
 
 import br.edu.gestaoavaliacoes.model.enums.AssessmentType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class AssessmentRequest {
 
+    @NotNull(message = "Curso é obrigatório")
     private Long courseId;
 
+    @NotNull(message = "Disciplina é obrigatória")
     private Long disciplineId;
 
+    @NotBlank(message = "Semestre é obrigatório")
     private String semester;
 
+    @NotBlank(message = "Docente é obrigatório")
     private String teacher;
 
+    @NotNull(message = "Data da avaliação é obrigatória")
     private LocalDate assessmentDate;
 
+    @NotNull(message = "Data de elaboração é obrigatória")
     private LocalDate elaborationDate;
 
+    @NotNull(message = "Tipo da avaliação é obrigatório")
     private AssessmentType type;
 
+    @NotNull(message = "Valor da avaliação é obrigatório")
+    @Positive(message = "Valor da avaliação deve ser maior que zero")
     private BigDecimal value;
 
+    @NotNull(message = "Quantidade de questões de múltipla escolha é obrigatória")
+    @PositiveOrZero(message = "Quantidade de questões de múltipla escolha não pode ser negativa")
     private Integer multipleChoiceQuestionCount;
 
+    @NotNull(message = "Quantidade de questões abertas é obrigatória")
+    @PositiveOrZero(message = "Quantidade de questões abertas não pode ser negativa")
     private Integer openQuestionCount;
 
     public AssessmentRequest() {

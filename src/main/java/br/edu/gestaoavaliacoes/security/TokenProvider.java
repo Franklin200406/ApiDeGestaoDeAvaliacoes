@@ -30,6 +30,7 @@ public class TokenProvider {
 
     public String generateToken(User user) {
         Instant now = Instant.now();
+        JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("gestao-avaliacoes")
                 .subject(user.getEmail())
@@ -39,7 +40,7 @@ public class TokenProvider {
                 .claim("name", user.getName())
                 .claim("type", user.getType().name())
                 .build();
-        return encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 
     public Optional<String> extractEmail(String token) {

@@ -1,9 +1,14 @@
 package br.edu.gestaoavaliacoes.presentation.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class OptionRequest {
 
+    @NotBlank(message = "Texto da opção é obrigatório")
     private String text;
 
+    @NotNull(message = "É necessário informar se a opção é a correta")
     private Boolean correct;
 
     public OptionRequest() {

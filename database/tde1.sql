@@ -244,7 +244,8 @@ CREATE TABLE assessment_open_questions (
 CREATE TABLE templates (
                            id BIGSERIAL PRIMARY KEY,
                            name VARCHAR(150) NOT NULL,
-                           file_name VARCHAR(255) NOT NULL
+                           file_name VARCHAR(255) NOT NULL,
+                           content TEXT NOT NULL
 );
 
 
@@ -305,9 +306,49 @@ VALUES ('Encapsulation', FALSE, 2),
 
 
 -- Template for PDF generation
+-- The content column holds an HTML document with Thymeleaf placeholders.
+-- It is processed with the "assessment" variable (the Assessment entity)
+-- and converted to PDF when an author requests an assessment's PDF.
 
-INSERT INTO templates (name, file_name)
-VALUES ('Default Template', 'default.html');
+INSERT INTO templates (name, file_name, content)
+VALUES ('Default Template', 'default.html', $html$<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body { font-family: Helvetica, Arial, sans-serif; font-size: 12px; color: #222; }
+        h1 { font-size: 18px; margin-bottom: 4px; }
+        .meta p { margin: 2px 0; }
+        .question { margin-top: 14px; }
+        .question p { margin: 0; }
+        .options { margin: 4px 0 0 18px; padding: 0; }
+        .options li { margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <h1>Avaliação <span th:text="${assessment.type}">AV1</span></h1>
+    <div class="meta">
+        <p>Curso: <span th:text="${assessment.course.name}"></span></p>
+        <p>Disciplina: <span th:text="${assessment.discipline.name}"></span></p>
+        <p>Docente: <span th:text="${assessment.teacher}"></span></p>
+        <p>Semestre: <span th:text="${assessment.semester}"></span></p>
+        <p>Data da avaliação: <span th:text="${assessment.assessmentDate}"></span></p>
+        <p>Valor total: <span th:text="${assessment.value}"></span></p>
+    </div>
+
+    <div th:each="mcq, iter : ${assessment.multipleChoiceQuestions}" class="question">
+        <p th:text="${iter.count} + ') (' + ${mcq.value} + ') ' + ${mcq.question.description}"></p>
+        <ul class="options">
+            <li th:each="option : ${mcq.question.options}" th:text="${option.text}"></li>
+        </ul>
+    </div>
+
+    <div th:each="oq, iter : ${assessment.openQuestions}" class="question">
+        <p th:text="${iter.count} + ') (' + ${oq.value} + ') ' + ${oq.question.description}"></p>
+    </div>
+</body>
+</html>
+$html$);
 
 
 -- Sample assessment using the questions above

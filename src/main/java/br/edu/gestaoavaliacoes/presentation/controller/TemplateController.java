@@ -3,6 +3,7 @@ package br.edu.gestaoavaliacoes.presentation.controller;
 import br.edu.gestaoavaliacoes.presentation.dto.request.TemplateRequest;
 import br.edu.gestaoavaliacoes.presentation.dto.response.TemplateResponse;
 import br.edu.gestaoavaliacoes.service.TemplateService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,12 +30,12 @@ public class TemplateController {
     }
 
     @PostMapping
-    public TemplateResponse create(@RequestBody TemplateRequest request) {
+    public TemplateResponse create(@Valid @RequestBody TemplateRequest request) {
         return templateService.create(request);
     }
 
     @PutMapping("/{id}")
-    public TemplateResponse update(@PathVariable Long id, @RequestBody TemplateRequest request) {
+    public TemplateResponse update(@PathVariable Long id, @Valid @RequestBody TemplateRequest request) {
         return templateService.update(id, request);
     }
 

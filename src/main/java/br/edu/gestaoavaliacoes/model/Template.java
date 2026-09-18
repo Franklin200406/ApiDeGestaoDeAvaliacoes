@@ -16,12 +16,16 @@ public class Template {
     @Column(name = "file_name", nullable = false, length = 255)
     private String fileName;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
+
     public Template() {
     }
 
-    public Template(String name, String fileName) {
+    public Template(String name, String fileName, String content) {
         this.name = name;
         this.fileName = fileName;
+        this.content = content;
     }
 
     public Long getId() {
@@ -46,5 +50,13 @@ public class Template {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

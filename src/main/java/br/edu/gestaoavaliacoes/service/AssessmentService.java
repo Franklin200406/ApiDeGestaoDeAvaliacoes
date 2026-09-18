@@ -7,6 +7,7 @@ import br.edu.gestaoavaliacoes.model.AssessmentQuestionKey;
 import br.edu.gestaoavaliacoes.model.Course;
 import br.edu.gestaoavaliacoes.model.Discipline;
 import br.edu.gestaoavaliacoes.model.Question;
+import br.edu.gestaoavaliacoes.model.Template;
 import br.edu.gestaoavaliacoes.model.User;
 import br.edu.gestaoavaliacoes.model.enums.QuestionType;
 import br.edu.gestaoavaliacoes.model.enums.UserType;
@@ -45,12 +46,14 @@ public class AssessmentService {
     private final TemplateRepository templateRepository;
     private final AssessmentMultipleChoiceQuestionRepository assessmentMultipleChoiceQuestionRepository;
     private final AssessmentOpenQuestionRepository assessmentOpenQuestionRepository;
+    private final AssessmentPdfGenerator assessmentPdfGenerator;
 
     public AssessmentService(AssessmentRepository assessmentRepository, CourseRepository courseRepository,
                              DisciplineRepository disciplineRepository, QuestionRepository questionRepository,
                              UserRepository userRepository, TemplateRepository templateRepository,
                              AssessmentMultipleChoiceQuestionRepository assessmentMultipleChoiceQuestionRepository,
-                             AssessmentOpenQuestionRepository assessmentOpenQuestionRepository) {
+                             AssessmentOpenQuestionRepository assessmentOpenQuestionRepository,
+                             AssessmentPdfGenerator assessmentPdfGenerator) {
         this.assessmentRepository = assessmentRepository;
         this.courseRepository = courseRepository;
         this.disciplineRepository = disciplineRepository;
@@ -59,6 +62,7 @@ public class AssessmentService {
         this.templateRepository = templateRepository;
         this.assessmentMultipleChoiceQuestionRepository = assessmentMultipleChoiceQuestionRepository;
         this.assessmentOpenQuestionRepository = assessmentOpenQuestionRepository;
+        this.assessmentPdfGenerator = assessmentPdfGenerator;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -206,10 +210,9 @@ public class AssessmentService {
     public byte[] generatePdf(Long id, Long templateId) {
         Assessment assessment = getOrThrow(id);
         requireAdminOrAuthor(assessment);
-        if (!templateRepository.existsById(templateId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Template não encontrado");
-        }
-        return AssessmentPdfGenerator.generate(assessment);
+        Template template = templateRepository.findById(templateId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Template não encontrado"));
+        return assessmentPdfGenerator.generate(assessment, template.getContent());
     }
 
     private void validateDisciplineBelongsToCourse(Discipline discipline, Course course) {
