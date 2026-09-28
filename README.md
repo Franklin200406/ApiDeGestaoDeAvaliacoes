@@ -285,7 +285,7 @@ curl http://localhost:8080/api/assessments -H "Authorization: Bearer $ADMIN"
 
 ### 8.8 Gerar o PDF da avaliação
 
-O `templateId` precisa apontar para um template já cadastrado (o seed cria o template 1, `Default Template`).
+O `templateId` precisa apontar para um template já cadastrado (o seed cria o template 1, `Template Padrão`).
 
 ```bash
 curl "http://localhost:8080/api/assessments/1/pdf?templateId=1" \
@@ -322,7 +322,7 @@ curl http://localhost:8080/api/users/me -H "Authorization: Bearer $AUTOR"
 # Atualizar os próprios dados
 curl -X PUT http://localhost:8080/api/users/me \
   -H "Authorization: Bearer $AUTOR" -H "Content-Type: application/json" \
-  -d '{"email":"author@example.com","name":"Content Author II"}'
+  -d '{"email":"author@example.com","name":"Autor de Conteúdo II"}'
 
 # Trocar a própria senha
 curl -X POST http://localhost:8080/api/users/me/change-password \
@@ -477,7 +477,7 @@ A resposta segue o formato `Page` do Spring Data:
 
 ```json
 {
-  "content": [ { "id": 1, "name": "Software Engineering", "...": "..." } ],
+  "content": [ { "id": 1, "name": "Engenharia de Software", "...": "..." } ],
   "number": 0,
   "size": 5,
   "totalElements": 1,

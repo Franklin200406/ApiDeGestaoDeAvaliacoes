@@ -52,7 +52,7 @@ class AssessmentPdfGeneratorTest {
         Course course = new Course("Engenharia de Software", "Curso de exemplo", ClassFormat.PRESENTIAL);
         Discipline discipline = new Discipline("Programação Orientada a Objetos", "Disciplina de exemplo",
                 80, Shift.NIGHT, course);
-        User author = new User("author@example.com", "Content Author", UserType.AUTHOR, "hash");
+        User author = new User("author@example.com", "Autor de Conteúdo", UserType.AUTHOR, "hash");
 
         Question multipleChoiceQuestion = new Question(QuestionType.MULTIPLE_CHOICE, Difficulty.EASY,
                 "Qual das alternativas NÃO é um pilar da orientação a objetos?", 4, discipline, author);

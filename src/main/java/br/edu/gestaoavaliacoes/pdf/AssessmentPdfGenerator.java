@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 /**
- * Renders an assessment as a PDF by processing an admin-registered HTML
- * template (Thymeleaf syntax) with the assessment's data and converting the
- * resulting HTML into a PDF document.
+ * Renderiza uma avaliação como PDF processando um template HTML cadastrado
+ * pelo admin (sintaxe Thymeleaf) com os dados da avaliação e convertendo o
+ * HTML resultante em um documento PDF.
  */
 @Component
 public class AssessmentPdfGenerator {
