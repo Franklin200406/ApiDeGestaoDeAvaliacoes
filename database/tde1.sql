@@ -1,10 +1,10 @@
 -- ============================================================
--- Assessment Management System (TDE1)
--- Database: PostgreSQL
+-- Sistema de Gestão de Avaliações (TDE1)
+-- Banco de dados: PostgreSQL
 -- ============================================================
 
 -- ============================================================
--- TABLE: users
+-- TABELA: users
 -- ============================================================
 
 CREATE TABLE users (
@@ -20,7 +20,7 @@ CREATE TABLE users (
 
 
 -- ============================================================
--- TABLE: courses
+-- TABELA: courses
 -- ============================================================
 
 CREATE TABLE courses (
@@ -35,7 +35,7 @@ CREATE TABLE courses (
 
 
 -- ============================================================
--- TABLE: disciplines
+-- TABELA: disciplines
 -- ============================================================
 
 CREATE TABLE disciplines (
@@ -59,8 +59,8 @@ CREATE TABLE disciplines (
 
 
 -- ============================================================
--- TABLE: user_courses
--- Association between users and courses
+-- TABELA: user_courses
+-- Associação entre usuários e cursos
 -- ============================================================
 
 CREATE TABLE user_courses (
@@ -80,8 +80,8 @@ CREATE TABLE user_courses (
 
 
 -- ============================================================
--- TABLE: user_subjects
--- Association between users and disciplines
+-- TABELA: user_subjects
+-- Associação entre usuários e disciplinas
 -- ============================================================
 
 CREATE TABLE user_subjects (
@@ -101,7 +101,7 @@ CREATE TABLE user_subjects (
 
 
 -- ============================================================
--- TABLE: questions
+-- TABELA: questions
 -- ============================================================
 
 CREATE TABLE questions (
@@ -130,7 +130,7 @@ CREATE TABLE questions (
 
 
 -- ============================================================
--- TABLE: question_options
+-- TABELA: question_options
 -- ============================================================
 
 CREATE TABLE question_options (
@@ -146,7 +146,7 @@ CREATE TABLE question_options (
 
 
 -- ============================================================
--- TABLE: assessments
+-- TABELA: assessments
 -- ============================================================
 
 CREATE TABLE assessments (
@@ -194,8 +194,8 @@ CREATE TABLE assessments (
 
 
 -- ============================================================
--- TABLE: assessment_multiple_choice_questions
--- Association between assessments and multiple choice questions
+-- TABELA: assessment_multiple_choice_questions
+-- Associação entre avaliações e questões de múltipla escolha
 -- ============================================================
 
 CREATE TABLE assessment_multiple_choice_questions (
@@ -216,8 +216,8 @@ CREATE TABLE assessment_multiple_choice_questions (
 
 
 -- ============================================================
--- TABLE: assessment_open_questions
--- Association between assessments and open questions
+-- TABELA: assessment_open_questions
+-- Associação entre avaliações e questões abertas
 -- ============================================================
 
 CREATE TABLE assessment_open_questions (
@@ -238,7 +238,7 @@ CREATE TABLE assessment_open_questions (
 
 
 -- ============================================================
--- TABLE: templates
+-- TABELA: templates
 -- ============================================================
 
 CREATE TABLE templates (
@@ -250,30 +250,30 @@ CREATE TABLE templates (
 
 
 -- ============================================================
--- SEED DATA
--- Passwords are BCrypt hashes of "password123"
+-- DADOS DE EXEMPLO (SEED)
+-- As senhas são hashes BCrypt de "password123"
 -- ============================================================
 
 INSERT INTO users (email, name, type, password)
-VALUES ('admin@example.com', 'System Admin', 'ADMIN', '$2a$10$lbRlUgsfy4KCzXFpDAZ5HOS5j68//DVVDGtcwDdi/un4EracqMYMW'),
-       ('author@example.com', 'Content Author', 'AUTHOR', '$2a$10$lbRlUgsfy4KCzXFpDAZ5HOS5j68//DVVDGtcwDdi/un4EracqMYMW');
+VALUES ('admin@example.com', 'Administrador do Sistema', 'ADMIN', '$2a$10$lbRlUgsfy4KCzXFpDAZ5HOS5j68//DVVDGtcwDdi/un4EracqMYMW'),
+       ('author@example.com', 'Autor de Conteúdo', 'AUTHOR', '$2a$10$lbRlUgsfy4KCzXFpDAZ5HOS5j68//DVVDGtcwDdi/un4EracqMYMW');
 
 
 INSERT INTO courses (name, description, class_format)
-VALUES ('Software Engineering',
-        'Course focused on developing and managing software systems.',
+VALUES ('Engenharia de Software',
+        'Curso focado no desenvolvimento e gerenciamento de sistemas de software.',
         'PRESENTIAL');
 
 
 INSERT INTO disciplines (name, description, workload_hours, shift, course_id)
-VALUES ('Object-Oriented Programming',
-        'Discipline about object-oriented programming concepts and practices.',
+VALUES ('Programação Orientada a Objetos',
+        'Disciplina sobre conceitos e práticas de programação orientada a objetos.',
         80,
         'NIGHT',
         1);
 
 
--- Associate the author with the course and the discipline
+-- Associa o autor ao curso e à disciplina
 
 INSERT INTO user_courses (user_id, course_id)
 VALUES (2, 1);
@@ -282,36 +282,36 @@ INSERT INTO user_subjects (user_id, discipline_id)
 VALUES (2, 1);
 
 
--- Sample questions
+-- Questões de exemplo
 
 INSERT INTO questions (type, difficulty, description, option_count, discipline_id, author_id)
 VALUES ('OPEN', 'MEDIUM',
-        'Explain the concept of polymorphism in object-oriented programming and give an example.',
+        'Explique o conceito de polimorfismo na programação orientada a objetos e dê um exemplo.',
         NULL,
         1,
         2);
 
 INSERT INTO questions (type, difficulty, description, option_count, discipline_id, author_id)
 VALUES ('MULTIPLE_CHOICE', 'EASY',
-        'Which of the following principles is NOT part of the four pillars of object-oriented programming?',
+        'Qual das seguintes alternativas NÃO é um dos quatro pilares da programação orientada a objetos?',
         4,
         1,
         2);
 
 INSERT INTO question_options (text, is_correct, question_id)
-VALUES ('Encapsulation', FALSE, 2),
-       ('Inheritance', FALSE, 2),
-       ('Polymorphism', FALSE, 2),
-       ('Recursion', TRUE, 2);
+VALUES ('Encapsulamento', FALSE, 2),
+       ('Herança', FALSE, 2),
+       ('Polimorfismo', FALSE, 2),
+       ('Recursão', TRUE, 2);
 
 
--- Template for PDF generation
--- The content column holds an HTML document with Thymeleaf placeholders.
--- It is processed with the "assessment" variable (the Assessment entity)
--- and converted to PDF when an author requests an assessment's PDF.
+-- Template para geração de PDF
+-- A coluna content guarda um documento HTML com placeholders do Thymeleaf.
+-- Ele é processado com a variável "assessment" (a entidade Assessment)
+-- e convertido em PDF quando um autor solicita o PDF de uma avaliação.
 
 INSERT INTO templates (name, file_name, content)
-VALUES ('Default Template', 'default.html', $html$<!DOCTYPE html>
+VALUES ('Template Padrão', 'default.html', $html$<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
@@ -351,7 +351,7 @@ VALUES ('Default Template', 'default.html', $html$<!DOCTYPE html>
 $html$);
 
 
--- Sample assessment using the questions above
+-- Avaliação de exemplo usando as questões acima
 
 INSERT INTO assessments (
     semester,
@@ -368,7 +368,7 @@ INSERT INTO assessments (
 )
 VALUES (
            '2026.1',
-           'Prof. Example',
+           'Prof. Exemplo',
            '2026-06-15',
            '2026-05-10',
            'AV1',
