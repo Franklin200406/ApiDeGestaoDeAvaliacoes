@@ -1,6 +1,6 @@
 # API de Gestão de Avaliações
 
-API REST para gestão de avaliações acadêmicas: usuários, cursos, disciplinas, questões, avaliações e templates de geração de PDF.
+API REST para gestão de avaliações acadêmicas: usuários, cursos, disciplinas, questões, avaliações e templates de geração de PDF
 
 Todos os endpoints exigem autenticação JWT, exceto `POST /api/auth/login`. Todas as listagens são paginadas em banco, e todo o tráfego é JSON (o PDF gerado é a única exceção, que sai como `application/pdf`).
 
